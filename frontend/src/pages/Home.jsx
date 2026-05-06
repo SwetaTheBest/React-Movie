@@ -1,7 +1,6 @@
 import MovieCard from "../components/MovieCard";
 import Search from "../components/Search";
-import { useState } from "react";
-import { useMemo } from "react";
+import { useState, useMemo } from "react";
 
 function Home() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -26,6 +25,11 @@ function Home() {
       url: "https://image.tmdb.org/t/p/w500/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg",
     },
   ];
+  const filteredMovies = useMemo(() => {
+    return movies.filter((movie) =>
+      movie.title.toLowerCase().includes(searchQuery.toLowerCase()),
+    );
+  }, [searchQuery, movies]);
   return (
     <div className="home">
       <h2>Welcome to Movie App</h2>
@@ -36,12 +40,9 @@ function Home() {
       </div>
       <div id="spacer"></div>
       <div className="movie-grid">
-        {movies.map(
-          (movie) =>
-            movie.title.toLowerCase().startsWith(searchQuery.toLowerCase()) && (
-              <MovieCard movie={movie} key={movie.id} />
-            ),
-        )}
+        {filteredMovies.map((movie) => (
+          <MovieCard movie={movie} key={movie.id} />
+        ))}
       </div>
     </div>
   );

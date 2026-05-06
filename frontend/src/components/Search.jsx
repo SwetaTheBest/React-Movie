@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import debounce from "../utils/debounce";
 
-function Search({onSearch}) {
-  const [searchQuery, setSearchQuery] = useState("");
+
+export default function Search({onSearch}) {
+  const [searchQuery, setSearchQuery] = useState(""); 
+  const debouncedSearch = useRef(debounce(onSearch, 300)) ;  
 
   const handleSearch = (e) => {
     e.preventDefault();
     // Handle search logic
-    alert("searching for: " + searchQuery);
     onSearch(searchQuery);
   };
+  
   return (
     <div>
       <div className="search">
@@ -33,5 +36,3 @@ function Search({onSearch}) {
     </div>
   );
 }
-
-export default Search;
