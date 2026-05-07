@@ -1,17 +1,17 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useCallback } from "react";
 import debounce from "../utils/debounce";
 
-
-export default function Search({onSearch}) {
-  const [searchQuery, setSearchQuery] = useState(""); 
-  const debouncedSearch = useRef(debounce(onSearch, 300)) ;  
+export default function Search({ onSearch }) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const debouncedSearch = useCallback(debounce((val)=>
+    onSearch(val), 300), [] );
 
   const handleSearch = (e) => {
     e.preventDefault();
     // Handle search logic
-    onSearch(searchQuery);
+    debouncedSearch(searchQuery);
   };
-  
+
   return (
     <div>
       <div className="search">
@@ -24,9 +24,8 @@ export default function Search({onSearch}) {
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
-              onSearch(e.target.value);
-            }
-          }
+              debouncedSearch(e.target.value);
+            }}
           />
         </form>
         <button type="submit" className="search-button">
