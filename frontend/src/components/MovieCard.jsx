@@ -1,10 +1,10 @@
 function MovieCard({ movie }) {
   return (
-    <div className="group relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+    <div className="group relative bg-linear-to-br from-gray-800 to-gray-900 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
       {/* Image Container */}
       <div className="relative overflow-hidden bg-gray-700 aspect-video">
         <img 
-          src={movie.url} 
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} 
           alt={movie.title}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
         />
@@ -20,12 +20,12 @@ function MovieCard({ movie }) {
       </div>
 
       {/* Content */}
-      <div className="p-5 space-y-3">
-        <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors duration-200 line-clamp-2">
+      <div className="p-5 space-y-1">
+        <h3 className="text-sm font-bold text-white group-hover:text-purple-100 transition-colors duration-200 line-clamp-2">
           {movie.title}
         </h3>
         <div className="flex items-center justify-between text-sm">
-          <p className="text-gray-400">
+          <p className="text-gray-100">
             📅 {new Date(movie.release_date).toLocaleDateString('en-US', { 
               year: 'numeric', 
               month: 'short' 
