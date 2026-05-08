@@ -25,24 +25,37 @@ function Home() {
       url: "https://image.tmdb.org/t/p/w500/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg",
     },
   ];
+  
   const filteredMovies = useMemo(() => {
     return movies.filter((movie) =>
       movie.title.toLowerCase().includes(searchQuery.toLowerCase()),
     );
   }, [searchQuery, movies]);
+  
   return (
-    <div className="home">
-      <h2>Welcome to Movie App</h2>
-      <p>Discover and explore your favorite movies!</p>
-      <div id="spacer"></div>
-      <div>
-        <Search onSearch={setSearchQuery} />
-      </div>
-      <div id="spacer"></div>
-      <div className="movie-grid">
-        {filteredMovies.map((movie) => (
-          <MovieCard movie={movie} key={movie.id} />
-        ))}
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-slate-50 to-gray-200">
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        {/* Search Section */}
+        <div className="mb-12">
+          <Search onSearch={setSearchQuery} />
+        </div>
+
+        {/* Movie Grid - Horizontal Scroll */}
+        <div className="overflow-x-auto pb-4 scrollbar-hide">
+          <div className="grid grid-cols-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-6">
+            {filteredMovies.length > 0 ? (
+              filteredMovies.map((movie) => (
+                <div key={movie.id}>
+                  <MovieCard movie={movie} />
+                </div>
+              ))
+            ) : (
+              <div className="col-span-4 text-center py-12">
+                <p className="text-gray-600 text-xl">No movies found matching your search</p>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
